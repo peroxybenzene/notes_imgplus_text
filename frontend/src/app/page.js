@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = typeof window !== "undefined" ? window.location.origin : "http://localhost:8000";
 
 export default function Home() {
   const [url, setUrl] = useState("");

@@ -5,6 +5,8 @@ import time
 import logging
 import threading
 import subprocess
+import sys
+import webbrowser
 from typing import Dict, Any, Optional
 from fastapi import FastAPI, BackgroundTasks, HTTPException, Header, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -37,6 +39,17 @@ refresh_path_windows()
 
 app = FastAPI(title="Multimodal AI Video Note-Taking API")
 
+@app.on_event("startup")
+def on_startup():
+    def open_browser():
+        time.sleep(2.0)  # Wait for uvicorn to bind to port
+        webbrowser.open("http://127.0.0.1:8000")
+        
+    logger.info("Starting background thread to open browser at http://127.0.0.1:8000")
+    thread = threading.Thread(target=open_browser)
+    thread.daemon = True
+    thread.start()
+
 # Enable CORS for the Next.js frontend
 app.add_middleware(
     CORSMiddleware,
@@ -48,14 +61,27 @@ app.add_middleware(
 
 # Directories
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+if getattr(sys, 'frozen', False):
+    # Running inside a PyInstaller EXE bundle
+    bundle_dir = sys._MEIPASS
+    DIST_DIR = os.path.join(bundle_dir, "dist")
+    # Add embedded binary dir (where ffmpeg.exe is stored) to PATH
+    ffmpeg_bin_dir = os.path.join(bundle_dir, "bin")
+    os.environ["PATH"] = ffmpeg_bin_dir + os.path.pathsep + os.environ.get("PATH", "")
+else:
+    # Running in normal development mode
+    DIST_DIR = os.path.join(BASE_DIR, "dist")
+
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 SCREENSHOTS_DIR = os.path.join(STATIC_DIR, "screenshots")
 TEMP_DIR = os.path.join(BASE_DIR, "temp")
 
 os.makedirs(SCREENSHOTS_DIR, exist_ok=True)
 os.makedirs(TEMP_DIR, exist_ok=True)
+os.makedirs(DIST_DIR, exist_ok=True) # Fallback for dev
 
-# Mount static folder for screenshots
+# Mount screenshots static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 # In-memory job repository
@@ -404,3 +430,10 @@ def get_job_status(job_id: str):
         error=job_data["error"],
         notes=job_data["notes"]
     )
+
+# Serve Next.js frontend statically from root /
+app.mount("/", StaticFiles(directory=DIST_DIR, html=True), name="frontend")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="info")

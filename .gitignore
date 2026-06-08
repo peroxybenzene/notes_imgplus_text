@@ -26,3 +26,10 @@ frontend/.env*
 .idea/
 .DS_Store
 Thumbs.db
+
+# Standalone compilation outputs
+backend/bin/
+backend/build/
+backend/dist/
+dist/
+*.spec
