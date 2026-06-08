@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
+  --accent: #ec4899;
+  --card-bg: rgba(20, 20, 25, 0.65);
+  --border-color: rgba(255, 255, 255, 0.08);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Classes */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+  outline: none;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(9, 9, 11, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+/* Markdown Rendering (Prose Style) */
+.prose {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #d4d4d8;
+}
+
+.prose h1 {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 2.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.5rem;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f4f4f5;
+  margin-top: 1.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.25rem;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e4e4e7;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose blockquote {
+  border-left: 4px solid var(--primary);
+  background: rgba(139, 92, 246, 0.05);
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 0 4px 4px 0;
+  font-style: italic;
+  color: #a1a1aa;
+}
+
+.prose code {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fb7185;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.prose pre {
+  background: #09090b;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.25rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.prose pre code {
+  background: transparent;
+  color: #e4e4e7;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9em;
+}
+
+.prose th {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  text-align: left;
+  color: white;
+}
+
+.prose td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 0.75rem 1rem;
+}
+
+.prose a {
+  color: #c084fc;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.prose a:hover {
+  color: #d8b4fe;
+}
+
+.prose strong {
+  color: white;
+  font-weight: 600;
+}
+
+/* Animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.05);
+  }
+}
+
+.glow-bg {
+  animation: pulseGlow 8s infinite ease-in-out;
+}
+
+/* Print styles for generating clean PDFs */
+@media print {
+  /* Hide non-printable elements */
+  .no-print, 
+  header, 
+  footer, 
+  form, 
+  button, 
+  .glow-bg, 
+  .glass-card:not(.print-container) {
+    display: none !important;
+  }
+
+  /* Reset layout for print */
+  body, main {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+  }
+
+  .prose {
+    color: #111111 !important;
+    max-width: 100% !important;
+    font-size: 11pt !important;
+    line-height: 1.6 !important;
+  }
+
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    color: black !important;
+    page-break-after: avoid;
+    border-bottom: 1px solid #e4e4e7 !important;
+  }
+
+  .prose h1 {
+    font-size: 20pt !important;
+    margin-top: 20pt !important;
+    margin-bottom: 10pt !important;
+  }
+
+  .prose h2 {
+    font-size: 16pt !important;
+    margin-top: 18pt !important;
+    margin-bottom: 8pt !important;
+  }
+
+  .prose h3 {
+    font-size: 13pt !important;
+    margin-top: 14pt !important;
+    margin-bottom: 6pt !important;
+  }
+
+  .prose p, .prose li {
+    font-size: 10.5pt !important;
+  }
+
+  .prose pre {
+    background: #f4f4f5 !important;
+    border: 1px solid #e4e4e7 !important;
+    color: #18181b !important;
+    padding: 10px !important;
+    font-size: 9pt !important;
+    page-break-inside: avoid;
+  }
+
+  .prose code {
+    background: #f4f4f5 !important;
+    color: #e11d48 !important;
+    border: 1px solid #e4e4e7 !important;
+  }
+
+  .prose pre code {
+    background: transparent !important;
+    color: inherit !important;
+    border: none !important;
+  }
+
+  .prose blockquote {
+    border-left: 3px solid #7c3aed !important;
+    background: #f9f8ff !important;
+    color: #4b5563 !important;
+    padding: 8px 12px !important;
+  }
+
+  .prose table {
+    border: 1px solid #e4e4e7 !important;
+  }
+
+  .prose th {
+    background: #f4f4f5 !important;
+    color: black !important;
+    border-bottom: 1px solid #e4e4e7 !important;
+  }
+
+  .prose td {
+    border-bottom: 1px solid #f4f4f5 !important;
+    color: #18181b !important;
+  }
+
+  .prose a {
+    color: #7c3aed !important;
+    text-decoration: underline !important;
+  }
+
+  .prose strong {
+    color: black !important;
+  }
+
+  /* Avoid page break inside images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid !important;
+    border: 1px solid #e4e4e7 !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+  }
+}

@@ -1,0 +1,28 @@
+# Python virtual env
+backend/venv/
+backend/__pycache__/
+backend/temp/
+backend/static/screenshots/*
+!backend/static/screenshots/.gitkeep
+backend/scratch/
+*.pyc
+
+# Local environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Node / Next.js dependencies and build folders
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.env*
+
+# IDEs and System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
